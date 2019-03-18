@@ -18,7 +18,7 @@ class Table extends Component {
             <td><a href="#" onClick={() => clickDetail(item.id)} >{item.title}</a></td>
             <td>
               <Button
-              type="button"
+              type="button"   
               onClick={() => deleteArticle(item.id)}
               >Supprimer
               </Button>
