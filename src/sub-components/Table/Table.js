@@ -11,8 +11,6 @@ class Table extends Component {
       <div>
         <table>
         {articles ?
-
-
           articles.map( item =>
           <tr key={item.id}>
             <td>{item.id}</td>
