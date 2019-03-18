@@ -1,35 +1,48 @@
 import React, {Component} from "react";
 import Button from '../../sub-components/Button';
+import WithLoading from '../../components/WithLoading';
 
 class Table extends Component {
 
   render() {
 
-    const { articles, albums, utilisateurs, showPhotos, showAlbums, showTodos, showPost, photos, nbrelement, deleteArticle, isSearched, pattern, clickDetail } = this.props
+    const { articles, albums, utilisateurs, showPhotos, showAlbums, showTodos, showPost, nbrelement, deleteArticle, isSearched, pattern, clickDetail, deleteUser, isLoading } = this.props
+    const ButtonWithLoading = WithLoading(Table);
 
     if(articles) {
-        return (<table>
+      return (
+        <table className="redTable">
+          <thead>
+            <tr>
+              <th>id</th>
+              <th>Titre</th>
+              <th>Action</th>
+            </tr>
+          </thead>
           <tbody>
-          {articles.filter(isSearched(pattern)).slice(0, nbrelement).map( item =>
-          <tr key={item.id}>
-            <td>{item.id}</td>
-            <td><a href="#" onClick={() => clickDetail(item.id)} >{item.title}</a></td>
-            <td>
-              <Button
-              type="button"
-              onClick={() => deleteArticle(item.id)}
-              >Supprimer
-              </Button>
-            </td>
-          </tr>
-          )
-        }
-        </tbody>
+            {articles.filter(isSearched(pattern)).slice(0, nbrelement).map( item =>
+              <tr key={item.id}>
+                <td>{item.id}</td>
+                <td className="pointer"
+                  onClick={() => clickDetail(item.id)} >{item.title}
+                </td>
+                <td>
+                  <Button
+                  type="button"
+                  onClick={() => deleteArticle(item)}
+                  >Supprimer
+                  </Button>
+
+                </td>
+              </tr>
+              )
+            }
+          </tbody>
         </table> )
     } else if(albums) {
         return (
           <div>
-            <table>
+            <table className="redTable">
               <thead>
                 <tr>
                   <th>id</th>
@@ -40,26 +53,19 @@ class Table extends Component {
                 {albums.map(item =>
                   <tr key={item.id}>
                       <td>{item.id}</td>
-                      <td  onClick={() =>showPhotos(item.id)} >{item.title}</td>
+                      <td className="pointer" onClick={() =>showPhotos(item.id)} >{item.title}</td>
                   </tr>
                 )}
               </tbody>
             </table>
-            <div>
-                { photos ?
-                  photos.map(photo =>
-                    <img key={photo.id} src={photo.thumbnailUrl}></img>
-                  )
-                :  ''
-                }
-            </div>
+
           </div>
         )
     } else {
         return (
           <div>
             { utilisateurs ?
-            <table>
+            <table className="redTable">
               <thead>
                 <tr>
                   <th>id</th>
@@ -67,19 +73,25 @@ class Table extends Component {
                   <th>username</th>
                   <th>email</th>
                   <th>options</th>
-                </tr>
+                  <th>actions</th>
+              </tr>
               </thead>
               <tbody>
                 {utilisateurs.map(item =>
                   <tr key={item.id}>
-                      <td>{item.name}</td>
+                      <td>{item.id}</td>
+                      <td className="pointer" >{item.name}</td>
                       <td>{item.username}</td>
                       <td>{item.email}</td>
                       <td>
-                        <button  onClick={() => showAlbums(item.id)} >albums</button>
-                        <button onClick={() => showTodos(item.id)} >todos</button>
-                        <button  onClick={() => showPost(item.id)}>post</button>
+                        <Button type="button" onClick={() => showAlbums(item.id)} >Voir albums</Button>
+                        <Button type="button" onClick={() => showTodos(item.id)} >Voir todos</Button>
+                        <Button type="button" onClick={() => showPost(item.id)} >Voir articles</Button>
                       </td>
+                      <td>
+                        <Button type="button" onClick={() => deleteUser(item)} >Supprimer</Button>
+                      </td>
+
                   </tr>
                 )}
               </tbody>

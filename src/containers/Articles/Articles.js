@@ -20,6 +20,7 @@ class Articles extends Component {
     this.getArticles()
   }
 
+  //Formulaire
   validateForm = () => {
     return this.state.title.length > 2
   }
@@ -38,38 +39,37 @@ class Articles extends Component {
       body: this.state.body,
       userId: this.state.userId,
     }
-    console.log(this.state.articles)
-    this.state.articles.push(articleForm);
-    console.log(this.state.articles)
-    // this.addArticle(articleForm)
+    this.addArticle(articleForm)
+
+  };
+
+  //Requete API
+  deleteArticle = article => {
+
+    var index = this.state.articles.indexOf(article);
+    this.state.articles.splice(index, 1);
+    this.setState({
+      articles: this.state.articles
+    })
+
+  }
+
+  addArticle = article => {
+
+
+    this.state.articles.push(article);
+
+    const notification = {type: 'success', message: "Ajout d'un article"}
+    this.state.notifications.push(notification)
+
     this.setState({
       articles: this.state.articles,
       id: "",
       title: "",
       body: "",
       userId: "",
+      notifications: this.state.notifications,
     })
-
-  };
-
-  deleteArticle = id => {
-    console.log(`${PATH_BASE}${PATH_SEARCH}/${id}`);
-    axios.delete(`${PATH_BASE}${PATH_SEARCH}/${id}`)
-    .then(() => {
-
-      this.getArticles()
-    })
-    .catch(error => this.setState({ error }))
-
-  }
-
-  addArticle = article => {
-
-    axios(`${PATH_BASE}${PATH_SEARCH}`,article)
-    .then(() => {
-      this.getArticles()
-    })
-    .catch(error => this.setState({ error }))
 
   }
 
@@ -83,17 +83,9 @@ class Articles extends Component {
     .catch(error => this.setState({ error }))
   }
 
-  onSearchChange = event => this.setState({
-    searchTerm: event.target.value
-  })
-
-  isSearched = searchTerm => item =>
-    item.title.toLowerCase().includes(searchTerm.toLowerCase())
-
   getArticle = id => {
     axios(`${PATH_BASE}${PATH_SEARCH}/${id}`)
     .then(result => {
-      console.log(result.data)
       this.getComments(id)
       this.setState({
         article: result.data
@@ -112,8 +104,16 @@ class Articles extends Component {
     .catch(error => this.setState({ error }))
   }
 
+  // Filtre
+  isSearched = searchTerm => item =>
+    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+
+  onSearchChange = event => this.setState({
+    searchTerm: event.target.value
+  })
+
   render() {
-    const { article, article_comments, articles,id,title } = this.state
+    const { notifications, article, article_comments, articles,id,title } = this.state
     const TableWithLoading = WithLoading(Table);
 
     if (!articles) {
@@ -122,45 +122,64 @@ class Articles extends Component {
 
     return (
       <div>
-        <FormEvent
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
-          validateForm={!this.validateForm()}
-          id={id}
-          title={title}
-        />
-        <Search
-          className="inputSearch"
-          value={this.state.searchTerm}
-          onChange={this.onSearchChange}
-        >
-        Filtrer
-        </Search>
-        <TableWithLoading
-          articles={articles}
-          nbrelement="10"
-          pattern={this.state.searchTerm}
-          isSearched={this.isSearched}
-          isLoading ={this.state.isLoading}
-          deleteArticle={this.deleteArticle}
-          clickDetail={this.getArticle}
-        />
-      {article &&
-        <div>
-          <div>{article.title}</div>
-          <div>{article.body}</div>
-            {article_comments &&
-              article_comments.slice(0, 10).map( comment =>
-                <div>
-                  <div>Commentaire ({comment.id})</div>
-                    <div>{comment.name}</div>
-                    <div>{comment.email}</div>
-                    <div>{comment.body}</div>
-                </div>
-              )
-            }
+        <div className="row">
+          <div className="col">
+            <Search
+              className="inputSearch"
+              value={this.state.searchTerm}
+              onChange={this.onSearchChange}
+            >
+            Filtrer par titre
+            </Search>
+            <TableWithLoading
+              articles={articles}
+              nbrelement="10"
+              pattern={this.state.searchTerm}
+              isSearched={this.isSearched}
+              isLoading ={this.state.isLoading}
+              deleteArticle={this.deleteArticle}
+              clickDetail={this.getArticle}
+            />
+          </div>
+          <div className="col">
+            <div>
+                { notifications.map( (notification)  =>
+                  <div className="alert alert-success" role="alert">
+                    {notification.message}
+                  </div>
+                ) }
+            </div>
+            <FormEvent
+              handleSubmit={this.handleSubmit}
+              handleChange={this.handleChange}
+              validateForm={!this.validateForm()}
+              id={id}
+              title={title}
+            />
+          </div>
         </div>
-      }
+        <div className="row margin-top">
+          <div className="col">
+            {article.title &&
+              <div className="jumbotron">
+                <h2>{article.title}</h2>
+                <div>{article.body}</div>
+                <h3 className="text-left">Commentaires :</h3>
+                  {article_comments &&
+                    article_comments.slice(0, 10).map( comment =>
+                      <div key={comment.id} className="card">
+                        <div className="card-body">
+                          <h5 className="card-title">Commentaire de {comment.name})</h5>
+                          <h6 className="card-subtitle mb-2 text-muted">{comment.email}</h6>
+                          <div className="card-text">{comment.body}</div>
+                        </div>
+                      </div>
+                    )
+                  }
+              </div>
+            }
+          </div>
+        </div>
       </div>
     );
   }

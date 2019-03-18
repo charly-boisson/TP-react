@@ -14,7 +14,12 @@ class Albums extends Component {
     this.state = {DEFAULT_STATE}
   }
 
-  methodAxios = () => {
+  componentDidMount(){
+    this.getAlbums()
+  }
+
+  //Requetes
+  getAlbums = () => {
     axios(`${PATH_BASE}${PATH_SEARCH}`)
       .then(result => {
         this.setState({ albums: result.data})
@@ -24,15 +29,10 @@ class Albums extends Component {
   }
 
   showPhotos = (albumId) => {
-    console.log(`${PATH_BASE}/photos?albumId=${albumId}`)
     axios(`${PATH_BASE}/photos?albumId=${albumId}`)
     .then(result => {
       this.setState({ photos: result.data})
     })
-  }
-
-  componentDidMount(){
-    this.methodAxios()
   }
 
   render() {
@@ -40,14 +40,26 @@ class Albums extends Component {
     const TableWithLoading = WithLoading(Table);
     return (
       <div>
-        <TableWithLoading
-          albums={albums}
-          photos={photos}
-          showPhotos={this.showPhotos}
-          isLoading ={this.state.isLoading}
-        />
+        <div className="row">
+          <div className="col">
+            <TableWithLoading
+              albums={albums}
+              photos={photos}
+              showPhotos={this.showPhotos}
+              isLoading ={this.state.isLoading}
+            />
+          </div>
+          <div className="col">
+            { photos ?
+              photos.map(photo =>
+                <img key={photo.id} alt="photo_album" src={photo.thumbnailUrl}></img>
+              )
+            :  ''
+            }
+          </div>
+        </div>
       </div>
-    );  
+    );
     }
 }
 
