@@ -3,6 +3,7 @@ export const DEFAULT_STATE = {
   article: {},
   article_comments: [],
   albums: [],
+  photos: [],
   utilisateurs: {},
   title: "",
   body: "",

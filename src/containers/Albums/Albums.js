@@ -15,14 +15,20 @@ class Albums extends Component {
   }
 
   methodAxios = () => {
-     const datas = axios(`${PATH_BASE}${PATH_SEARCH}`)
+    axios(`${PATH_BASE}${PATH_SEARCH}`)
       .then(result => {
-        console.log(result)
-        return result.data
+        this.setState({ albums: result.data})
       })
       .catch(error => this.setState({ error }))
 
-      this.setState({ albums: datas})
+  }
+
+  showPhotos = (albumId) => {
+    console.log(`${PATH_BASE}/photos?albumId=${albumId}`)
+    axios(`${PATH_BASE}/photos?albumId=${albumId}`)
+    .then(result => {
+      this.setState({ photos: result.data})
+    })
   }
 
   componentDidMount(){
@@ -30,12 +36,14 @@ class Albums extends Component {
   }
 
   render() {
-    const { albums } = this.state
+    const { albums, photos } = this.state
     const TableWithLoading = WithLoading(Table);
     return (
       <div>
         <TableWithLoading
           albums={albums}
+          photos={photos}
+          showPhotos={this.showPhotos}
           isLoading ={this.state.isLoading}
         />
       </div>

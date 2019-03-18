@@ -14,14 +14,32 @@ class Utilisateurs extends Component {
   }
 
   methodAxios = () => {
-    const datas = axios(`${PATH_BASE}${PATH_SEARCH}`)
+    axios(`${PATH_BASE}${PATH_SEARCH}`)
       .then(result => {
-        console.log(result)
-        return result.data
+        this.setState({ utilisateurs: result.data})
       })
       .catch(error => this.setState({ error }))
 
-      this.setState({ utilisateurs: datas})
+  }
+  showAlbums = (userId) => {
+    console.log()
+    axios(`${PATH_BASE}/albums?userId=${userId}`)
+    .then(result => {
+      this.setState({ photos: result.data})
+    })
+  }
+
+  showPost = (userId) => {
+    axios(`${PATH_BASE}/posts?userId=${userId}`)
+    .then(result => {
+      this.setState({ photos: result.data })
+    })
+  }
+  showTodos = (userId) => {
+    axios(`${PATH_BASE}/todos?userId=${userId}`)
+    .then(result => {
+      this.setState({ photos: result.data})
+    })
   }
 
   componentDidMount(){
@@ -36,6 +54,9 @@ class Utilisateurs extends Component {
         <TableWithLoading
           utilisateurs={utilisateurs}
           isLoading ={this.state.isLoading}
+          showAlbums={this.showAlbums}
+          showTodos={this.showTodos}
+          showPost={this.showPost}
         />
       </div>
     );  
