@@ -1,10 +1,12 @@
 import React, {Component} from "react";
+import Button from '../../sub-components/Button';
 
 class Table extends Component {
 
   render() {
 
-    const { articles, albums, utilisateurs, showPhotos, showAlbums, showTodos, showPost, photos } = this.props
+    const { articles, albums, utilisateurs, showPhotos, showAlbums, showTodos, showPost, photos, nbrelement, deleteArticle, isSearched, pattern, clickDetail } = this.props
+
     if(articles) {
         return (<table>
           <tbody>
@@ -16,11 +18,11 @@ class Table extends Component {
               <Button
               type="button"
               onClick={() => deleteArticle(item.id)}
-              >Supprimer  
+              >Supprimer
               </Button>
             </td>
           </tr>
-          )         
+          )
         }
         </tbody>
         </table> )
@@ -35,20 +37,20 @@ class Table extends Component {
                 </tr>
               </thead>
               <tbody>
-                {albums.map(item => 
+                {albums.map(item =>
                   <tr key={item.id}>
                       <td>{item.id}</td>
                       <td  onClick={() =>showPhotos(item.id)} >{item.title}</td>
                   </tr>
-                )} 
-              </tbody> 
+                )}
+              </tbody>
             </table>
             <div>
-                { photos ?  
-                  photos.map(photo => 
+                { photos ?
+                  photos.map(photo =>
                     <img key={photo.id} src={photo.thumbnailUrl}></img>
-                  )  
-                :  '' 
+                  )
+                :  ''
                 }
             </div>
           </div>
@@ -56,7 +58,7 @@ class Table extends Component {
     } else {
         return (
           <div>
-            { utilisateurs ? 
+            { utilisateurs ?
             <table>
               <thead>
                 <tr>
@@ -68,7 +70,7 @@ class Table extends Component {
                 </tr>
               </thead>
               <tbody>
-                {utilisateurs.map(item => 
+                {utilisateurs.map(item =>
                   <tr key={item.id}>
                       <td>{item.name}</td>
                       <td>{item.username}</td>
@@ -79,12 +81,12 @@ class Table extends Component {
                         <button  onClick={() => showPost(item.id)}>post</button>
                       </td>
                   </tr>
-                )} 
-              </tbody> 
+                )}
+              </tbody>
             </table>
             : ''}
           </div>
-        )        
+        )
     }
   }
 }
