@@ -6,23 +6,30 @@ class Table extends Component {
 
   render() {
 
-    const { articles } = this.props
+    const { articles, nbrelement, deleteArticle, isSearched, pattern, clickDetail } = this.props
     return(
       <div>
         <table>
+          <tbody>
         {articles ?
-
-
-          articles.map( item =>
+          articles.filter(isSearched(pattern)).slice(0, nbrelement).map( item =>
           <tr key={item.id}>
             <td>{item.id}</td>
-            <td>{item.title}</td>
+            <td><a href="#" onClick={() => clickDetail(item.id)} >{item.title}</a></td>
+            <td>
+              <Button
+              type="button"
+              onClick={() => deleteArticle(item.id)}
+              >Supprimer
+              </Button>
+            </td>
           </tr>
 
           ) : (
             <div></div>
           )
         }
+        </tbody>
         </table>
       </div>
     )
