@@ -6,37 +6,24 @@ class Table extends Component {
 
   render() {
 
-    const { hackers, evenements, pattern, onDismiss, isSearched, onUpperCase } = this.props
+    const { articles } = this.props
     return(
       <div>
-        <h2>Liste des évènements (state) : </h2>
-          <ul>
-          {evenements ?
-            (
-              evenements.filter(isSearched(pattern)).map( item =>
-                <li key={item.idObject}>
-                  <Button
-                    type="button"
-                    onClick={() => onDismiss(item.idObject)}
-                  >Cacher</Button>
-                  <div>{item.titre}</div>
-                  <div><span>{item.lieu}</span> - <span>{item.date}</span></div>
-                  <div>{item.description}</div>
-                  <div><Button
-                    type="button"
-                    onClick={() => onUpperCase(item.idObject)}
-                  >Mettre en majuscule</Button></div>
-                </li>
-              )
+        <table>
+        {articles ?
+
+
+          articles.map( item =>
+          <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.title}</td>
+          </tr>
+
           ) : (
-            hackers.map( (hacker, index) =>
-              <li key={index}>
-                <div>{hacker.name}</div>
-              </li>
-            )
+            <div></div>
           )
-          }
-        </ul>
+        }
+        </table>
       </div>
     )
   }
