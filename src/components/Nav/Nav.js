@@ -12,7 +12,12 @@ const Nav = () =>
           <li className="nav-item">
             <Link to="/articles">Articles</Link>
           </li>
-
+          <li className="nav-item">
+            <Link to="/utilisateurs">Utilisateurs</Link>
+          </li>
+          <li className="nav-item">
+            <Link to="/albums">Albums</Link>
+          </li>
         </ul>
       </div>
     </nav>
