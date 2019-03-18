@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import { DEFAULT_STATE } from '../../state/initState'
+import WithLoading from '../../components/WithLoading';
+import Table from '../../sub-components/Table';
 import axios from 'axios';
 
-const PATH_BASE = 'https://swapi.co/api';
+const PATH_BASE = 'https://jsonplaceholder.typicode.com';
+const PATH_SEARCH = '/posts';
 
 class Articles extends Component {
 
@@ -11,22 +14,31 @@ class Articles extends Component {
     this.state = DEFAULT_STATE
   };
 
+  componentDidMount() {
+    this.getArticles()
+  }
+
   getArticles = () => {
-    axios(`${PATH_BASE}`)
+    axios(`${PATH_BASE}${PATH_SEARCH}`)
     .then(result => {
-      this.setSearchTopStories(result.data)
+      console.log(result.data)
       this.setState({
-        isLoading: false
+        articles: result.data
       })
     })
     .catch(error => this.setState({ error }))
   }
 
-
-
   render() {
+    const { articles } = this.state
+    const TableWithLoading = WithLoading(Table);
     return (
-      <div></div>
+      <div>
+        <TableWithLoading
+          articles={articles}
+          isLoading ={this.state.isLoading}
+        />
+      </div>
     );
   }
 }
