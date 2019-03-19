@@ -9,12 +9,6 @@ import Page404 from '../../containers/Page404'
 const Content = ({...props}) =>
       <div>
       <Switch>
-<<<<<<< HEAD
-         <Route exact path="/" component={Home} />
-         <Route path="/articles"  component={Articles}/>
-         <Route path="/utilisateurs"  component={Utilisateurs}/>
-         <Route path="/albums"  component={Albums}/>
-=======
          <Route exact path="/"
            render={() => <Home {...props}  />} />
          <Route path="/articles"
@@ -23,7 +17,6 @@ const Content = ({...props}) =>
            render={() => <Utilisateurs {...props}  />} />
          <Route path="/albums"
            render={() => <Albums {...props}  />} />
->>>>>>> micael_dev
          <Route path="*" component={Page404} />
        </Switch>
 
