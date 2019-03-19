@@ -2,7 +2,32 @@ import React, { Component } from "react";
 import { DEFAULT_STATE } from '../../state/initState';
 import { Link } from 'react-router-dom'
 
+<<<<<<< HEAD
 class Nav extends Component {
+=======
+const Nav = () =>
+  <div>
+    <nav className="navbar navbar-expand navbar-dark bg-dark">
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">Home</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/articles">Articles</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/albums">Albums</Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/utilisateurs">Utilisateurs</Link>
+            </li>
+          </ul>
+          <button className="navbar-toggler" type="button" >
+              Login
+          </button>
+      </nav>
+  </div>
+>>>>>>> Add page 404
 
   constructor(props){
     super(props);
