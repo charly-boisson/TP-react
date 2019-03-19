@@ -38,6 +38,11 @@ class Albums extends Component {
   render() {
     const { albums, photos } = this.state
     const TableWithLoading = WithLoading(Table);
+
+    // if (!this.props.data.isconnect) {
+    //   return null;
+    // }
+
     return (
       <div>
         <div className="row">

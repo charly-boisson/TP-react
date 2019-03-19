@@ -116,6 +116,10 @@ class Articles extends Component {
     const { notifications, article, article_comments, articles,id,title } = this.state
     const TableWithLoading = WithLoading(Table);
 
+    // if (this.props.data.isconnect) {
+    //   return null;
+    // }
+
     if (!articles) {
       return null;
     }
