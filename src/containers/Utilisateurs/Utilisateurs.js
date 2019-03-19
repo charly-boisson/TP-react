@@ -73,6 +73,11 @@ class Utilisateurs extends Component {
   render() {
     const { utilisateurs, albums_user, todos_user, posts_user } = this.state
     const TableWithLoading = WithLoading(Table);
+
+    // if (!this.props.data.isconnect) {
+    //   return null;
+    // }
+
     return (
       <div>
         <div className="row">

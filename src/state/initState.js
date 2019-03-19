@@ -14,4 +14,6 @@ export const DEFAULT_STATE = {
   searchTerm: "",
   notifications: [],
   isLoading: false,
+  isconnect: false,
+  buttonLoading: false,
  }

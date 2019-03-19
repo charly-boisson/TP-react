@@ -16,11 +16,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
+        <header data={this.state} className="App-header">
           <h1>CMS</h1>
           <Nav />
         </header>
-        <Content></Content>
+        <Content data={this.state} ></Content>
       </div>
     );
 
