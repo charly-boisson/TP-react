@@ -1,6 +1,6 @@
 import React from "react";
 
 const Loading = () =>
-  <div><img src="https://i.gifer.com/VUGF.gif" alt="gif Loading"></img></div>
+  <span>loading</span>
 
 export default Loading;

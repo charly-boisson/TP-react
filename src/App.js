@@ -14,20 +14,10 @@ class App extends Component {
   };
 
   render() {
-    const { notifications } = this.state;
     return (
       <div className="App">
-        <div>
-          <ul>
-            { notifications.map( (notification, index)  =>
-              <li key={index} >
-                <div>{notification.message}</div>
-              </li>
-            ) }
-          </ul>
-        </div>
         <header className="App-header">
-          <h1>Gestion des évènements</h1>
+          <h1>CMS</h1>
           <Nav />
         </header>
         <Content></Content>
