@@ -1,6 +1,7 @@
 import React from "react";
+import Button from '../../sub-components/Button';
 
-const FormEvent = ({ handleSubmit, handleChange, validateForm, id, title, body, userId}) =>
+const FormEvent = ({ handleSubmit, handleChange, validateForm, id, title, body, userId, buttonLoading}) =>
 
   <div className="formEvent">
     <form onSubmit={handleSubmit}>
@@ -20,7 +21,7 @@ const FormEvent = ({ handleSubmit, handleChange, validateForm, id, title, body, 
         <label>Id user</label>
         <input id="userId" type="number" className="form-control" required value={userId} onChange={handleChange} placeholder="Enter userId"></input>
       </div>
-      <button type="submit" className="btn btn-primary" disabled={validateForm} >Créer</button>
+      <Button type="submit" className="btn btn-primary" disabled={validateForm} onClick={ () => {}} buttonLoading={buttonLoading}>Créer</Button>
     </form>
   </div>
 

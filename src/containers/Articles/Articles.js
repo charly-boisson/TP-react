@@ -5,6 +5,7 @@ import Table from '../../sub-components/Table';
 import axios from 'axios';
 import FormEvent from '../../sub-components/FormEvent';
 import Search from '../../sub-components/Search';
+import { func } from "prop-types";
 
 const PATH_BASE = 'https://jsonplaceholder.typicode.com';
 const PATH_SEARCH = '/posts';
@@ -60,16 +61,24 @@ class Articles extends Component {
     this.state.articles.push(article);
 
     const notification = {type: 'success', message: "Ajout d'un article"}
-    this.state.notifications.push(notification)
+    this.setState({buttonLoading: true})
 
-    this.setState({
-      articles: this.state.articles,
-      id: "",
-      title: "",
-      body: "",
-      userId: "",
-      notifications: this.state.notifications,
-    })
+    var state = this;
+    setTimeout(function(){
+      state.state.notifications.push(notification)
+
+      state.setState({
+        articles: state.state.articles,
+        id: "",
+        title: "",
+        body: "",
+        userId: "",
+        notifications: state.state.notifications,
+        buttonLoading: false
+      })
+
+    }, 3000)
+
 
   }
 
@@ -113,7 +122,7 @@ class Articles extends Component {
   })
 
   render() {
-    const { notifications, article, article_comments, articles,id,title } = this.state
+    const { notifications, article, article_comments, articles,id,title,buttonLoading } = this.state
     const TableWithLoading = WithLoading(Table);
 
     // if (this.props.data.isconnect) {
@@ -159,6 +168,7 @@ class Articles extends Component {
               validateForm={!this.validateForm()}
               id={id}
               title={title}
+              buttonLoading={buttonLoading}
             />
           </div>
         </div>

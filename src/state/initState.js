@@ -15,4 +15,5 @@ export const DEFAULT_STATE = {
   notifications: [],
   isLoading: false,
   isconnect: false,
+  buttonLoading: false,
  }
